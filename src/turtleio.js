@@ -55,7 +55,9 @@ class TurtleIO {
 			seed: 625,
 			ssl: {
 				key: null,
-				cert: null
+				cert: null,
+				ciphers: null,
+				secureProtocol: null
 			},
 			uid: 0
 		};
@@ -644,12 +646,19 @@ class TurtleIO {
 					this.pipeline(req, res);
 				}).listen(this.config.port, this.config.address);
 			} else {
-				this.server = https.createServer({
+				let options = {
 					cert: fs.readFileSync(this.config.ssl.cert),
 					key: fs.readFileSync(this.config.ssl.key),
 					port: this.config.port,
 					host: this.config.address
-				}, (req, res) => {
+				}
+				if (this.config.ssl.ciphers) {
+ 					options.ciphers = this.config.ssl.ciphers;
+ 				}
+ 				if (this.config.ssl.secureProtocol) {
+ 					options.secureProtocol = this.config.ssl.secureProtocol;
+ 				}
+				this.server = https.createServer(options, (req, res) => {
 					this.pipeline(req, res);
 				}).listen(this.config.port, this.config.address);
 			}
