@@ -647,10 +647,13 @@ class TurtleIO {
 				}).listen(this.config.port, this.config.address);
 			} else {
 				let options = {
-					cert: fs.readFileSync(this.config.ssl.cert),
-					key: fs.readFileSync(this.config.ssl.key),
+					cert: this.config.ssl.cert,
+					key: this.config.ssl.key,
 					port: this.config.port,
 					host: this.config.address
+				};
+				if (this.config.ssl.ca){
+					options.ca = this.config.ssl.ca;
 				}
 				if (this.config.ssl.ciphers) {
  					options.ciphers = this.config.ssl.ciphers;
