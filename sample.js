@@ -7,6 +7,9 @@ var path = require("path"),
 server = require(path.join(__dirname, "index"))({
 	default: "test",
 	root: path.join(__dirname, "sites"),
+	headers: {
+		"cache-control": "no-cache"
+	},
 	logging: {
 		level: "debug"
 	},
@@ -18,6 +21,10 @@ server = require(path.join(__dirname, "index"))({
 
 server.get("/echo", function (req, res) {
 	res.send(req.parsed.query);
+});
+
+server.options("/echo", function (req, res) {
+	res.send("stuff");
 });
 
 server.start();

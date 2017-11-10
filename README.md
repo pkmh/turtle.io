@@ -1,6 +1,6 @@
 # turtle.io
 
-[![build status](https://secure.travis-ci.org/avoidwork/turtle.io.svg)](http://travis-ci.org/avoidwork/turtle.io) [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/avoidwork/turtle.io?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![build status](https://secure.travis-ci.org/avoidwork/turtle.io.svg)](http://travis-ci.org/avoidwork/turtle.io)
 
 turtle.io is very easy to get up and running! All you need to do is install it, and tell it what directory holds your web sites, & which hostnames to answer for.
 
@@ -30,7 +30,7 @@ Virtual host keys are the hostname, and the value is the directory relative to "
 
 ```javascript
 const turtleio = require("turtle.io");
-let server = turtleio({
+const server = turtleio({
     default: "mysite.com",
     port: 80,
     uid: 100,
@@ -97,6 +97,21 @@ Transaction rates are similar.
 The `request` object is passed to every route handler as the second argument, will have a `body` property with the payload from the Client. It will not be coerced to another format, so if you expect JSON, you'll have to `JSON.parse()` it yourself (for now).
 
 ## API & decoration
+##### canETag
+_Function (path, method)_
+
+Determines if a path can receive an ETag
+
+#### etags.ignore
+_Array_
+
+Array of paths to ignore for ETag generation
+
+#### etags.update
+_Function (state)_
+
+Updates the etag cache with new state
+
 #### request
 ##### allow
 _String_
@@ -177,6 +192,26 @@ _String_
 
 ***[Required]*** Default hostname to handle requests which are not specified within _vhosts_; must be a valid entry within _vhosts_.
 
+#### etags
+_Object_
+
+ETag middleware configuration.
+
+To enable state propagation set `notify` to `true`, and when receiving new state pass to `etags.update()`.
+
+```
+{
+	notify: true,
+	ignore: [], // Array of paths to ignore
+	onchange: (eventName, serializedCache) => {
+	... // serializedCache needs to be passed to other instances `etags.update()`
+	},
+	update: serializedCache => {
+	... // Override if you want to do more than set new state
+	}
+}
+```
+
 #### headers
 _Object_
 
@@ -243,14 +278,20 @@ _Number (625)_
 Seed for hashing of middleware with MurmurHash3.
 
 #### ssl.cert
-_Object_
+_String_
 
-[Optional] SSL certificate
+[Optional] SSL certificate file path
 
 #### ssl.key
-_Object_
+_String_
 
-[Optional] SSL certificate key/pem
+[Optional] SSL certificate key/pem file path
+
+
+#### ssl.pfx
+_String_
+
+[Optional] SSL certificate pfx file path
 
 #### uid
 _Number (null)_
@@ -258,5 +299,5 @@ _Number (null)_
 [Optional] UID the server runs as.
 
 ## License
-Copyright (c) 2016 Jason Mulligan  
+Copyright (c) 2017 Jason Mulligan
 Licensed under the BSD-3 license.

@@ -1,14 +1,19 @@
 module.exports = function (grunt) {
 	grunt.initConfig({
 		eslint: {
-			target: ["lib/*.js"]
+			target: [
+				"index.js",
+				"Gruntfile.js",
+				"lib/*.js",
+				"test/*.js"
+			]
 		},
-		mochaTest : {
+		mochaTest: {
 			options: {
 				reporter: "spec"
 			},
-			test : {
-				src : ["test/*_test.js"]
+			test: {
+				src: ["test/*_test.js"]
 			}
 		},
 		nsp: {
