@@ -23,15 +23,15 @@
   "dependencies": {
     "mimetype": "0.0.8",
     "moment": "~2.17.1",
-    "murmurhash3js": "~3.0.1",
-    "precise": "~1.1.0",
-    "retsu": "~2.0.3",
-    "tiny-coerce": "~1.0.1",
-    "tiny-defer": "~2.0.2",
-    "tiny-etag": "~1.3.3",
-    "tiny-lru": "~1.4.9",
-    "tiny-merge": "~1.0.0",
-    "woodland": "^2.1.0"
+    "murmurhash3js": "3.0.1",
+    "precise": "1.1.0",
+    "retsu": "2.0.3",
+    "tiny-coerce": "1.0.1",
+    "tiny-defer": "2.0.2",
+    "tiny-etag": "1.3.13",
+    "tiny-lru": "1.4.13",
+    "tiny-merge": "1.0.0",
+    "woodland": "2.3.3"
   },
   "devDependencies": {
     "grunt": "~1.0.1",
